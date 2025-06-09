@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get your professional website built in just 24 hours with Next.js, Tailwind CSS, and SEO optimization. Launch faster, rank higher, and impress your audience.">
+    <meta name="keywords" content="nextjs, tailwind css, seo, web development, fast website, landing page">
+    <title>24HourWeb | Launch Your Next.js & Tailwind Site in One Day</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4361ee',
+                        secondary: '#3f37c9',
+                        accent: '#4cc9f0',
+                        dark: '#1d3557',
+                        light: '#f8f9fa'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .tech-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(67, 97, 238, 0.5);
+        }
+        
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #4cc9f0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: bottom right;
+        }
+        
+        .animated-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .stat-number {
+            background: linear-gradient(90deg, #4361ee 0%, #4cc9f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .testimonial-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(67, 97, 238, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+            }
+        }
+        
+        .typing-demo {
+            width: 22ch;
+            animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid;
+            font-family: monospace;
+            display: inline-block;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+        
+        .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(200%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #10B981;
+        }
+        
+        .notification.error {
+            background: #EF4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Notification System -->
+    <div id="notification" class="notification hidden">
+        <span id="notification-message"></span>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="bg-primary w-10 h-10 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">24</span>
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-dark">Zeyad Web</span>
+                </div>
+                
+                <nav class="hidden md:flex space-x-10">
+                    <a href="#features" class="font-medium hover:text-primary animated-underline">Features</a>
+                    <a href="#process" class="font-medium hover:text-primary animated-underline">Process</a>
+                    <a href="#tech" class="font-medium hover:text-primary animated-underline">Tech Stack</a>
+                    <a href="#pricing" class="font-medium hover:text-primary animated-underline">Pricing</a>
+                    <a href="#testimonials" class="font-medium hover:text-primary animated-underline">Testimonials</a>
+                </nav>
+                
+                <div class="flex items-center">
+                    <a href="#contact" class="hidden md:inline-block bg-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-secondary transition duration-300">Get Started</a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-primary">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#features" class="font-medium hover:text-primary">Features</a>
+                    <a href="#process" class="font-medium hover:text-primary">Process</a>
+                    <a href="#tech" class="font-medium hover:text-primary">Tech Stack</a>
+                    <a href="#pricing" class="font-medium hover:text-primary">Pricing</a>
+                    <a href="#testimonials" class="font-medium hover:text-primary">Testimonials</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-secondary transition duration-300 text-center mt-2">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Your Website <span class="typing-demo">Ready in 24 Hours</span></h1>
+                    <p class="text-xl mb-8 opacity-90">Professional Next.js & Tailwind CSS websites with SEO optimization, delivered in just one day. Perfect for startups, businesses, and personal brands.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#contact" class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg text-center hover:bg-gray-100 transition duration-300 glow">Launch Your Site Today</a>
+                        <a href="#features" class="bg-transparent border-2 border-white px-8 py-4 rounded-lg font-bold text-lg text-center hover:bg-white hover:text-primary transition duration-300">Learn More</a>
+                    </div>
+                    
+                    <div class="mt-12 flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>SEO Optimized</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Mobile Responsive</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Lightning Fast</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="bg-white rounded-2xl shadow-2xl p-1 w-80 h-96 transform rotate-3">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full"></div>
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 bg-accent text-dark font-bold py-2 px-6 rounded-full shadow-lg">
+                            <i class="fas fa-bolt mr-2"></i> Next.js Powered
+                        </div>
+                        <div class="absolute -top-6 -right-6 bg-primary text-white font-bold py-2 px-6 rounded-full shadow-lg">
+                            <i class="fas fa-search mr-2"></i> SEO Ready
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="animate-on-scroll">
+                    <div class="text-4xl font-bold stat-number">200+</div>
+                    <div class="text-gray-600 mt-2">Websites Launched</div>
+                </div>
+                <div class="animate-on-scroll">
+                    <div class="text-4xl font-bold stat-number">24h</div>
+                    <div class="text-gray-600 mt-2">Average Delivery</div>
+                </div>
+                <div class="animate-on-scroll">
+                    <div class="text-4xl font-bold stat-number">99%</div>
+                    <div class="text-gray-600 mt-2">Client Satisfaction</div>
+                </div>
+                <div class="animate-on-scroll">
+                    <div class="text-4xl font-bold stat-number">4.9/5</div>
+                    <div class="text-gray-600 mt-2">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Everything You Need in One Day</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our comprehensive service combines cutting-edge technology with expert execution to deliver remarkable results quickly.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-primary bg-opacity-10 text-primary flex items-center justify-center mb-6">
+                        <i class="fas fa-rocket text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Next.js Power</h3>
+                    <p class="text-gray-600 mb-4">Blazing fast websites with server-side rendering, static site generation, and API routes built-in.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Lightning fast page loads</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Automatic code splitting</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Optimized for performance</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-accent bg-opacity-10 text-accent flex items-center justify-center mb-6">
+                        <i class="fab fa-css3-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Tailwind CSS Design</h3>
+                    <p class="text-gray-600 mb-4">Beautiful, responsive designs using utility-first CSS framework for rapid development.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Fully responsive design</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Customizable components</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Dark mode support</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-secondary bg-opacity-10 text-secondary flex items-center justify-center mb-6">
+                        <i class="fas fa-search text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">SEO Optimization</h3>
+                    <p class="text-gray-600 mb-4">Built to rank higher with semantic HTML, optimized metadata, and fast loading times.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Google-friendly structure</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Schema.org markup</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>XML sitemap included</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-primary bg-opacity-10 text-primary flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mobile-First</h3>
+                    <p class="text-gray-600 mb-4">Perfectly responsive on all devices with touch-friendly navigation and fast loading.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Fluid layouts</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Touch-optimized UI</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Cross-browser tested</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-accent bg-opacity-10 text-accent flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lightning Fast</h3>
+                    <p class="text-gray-600 mb-4">Optimized for speed with code splitting, image optimization, and efficient bundling.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>90+ PageSpeed scores</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Lazy loading images</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Minified assets</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="animate-on-scroll bg-white p-8 rounded-xl shadow-lg feature-card transition duration-300">
+                    <div class="w-14 h-14 rounded-lg bg-secondary bg-opacity-10 text-secondary flex items-center justify-center mb-6">
+                        <i class="fas fa-lock text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Secure & Reliable</h3>
+                    <p class="text-gray-600 mb-4">Built with security best practices and deployed to trusted platforms.</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>HTTPS by default</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Security headers</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>DDoS protection</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our 24-Hour Process</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">How we deliver a complete, professional website in just one day</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="relative">
+                        <div class="absolute top-0 left-10 w-1 h-full bg-primary bg-opacity-20"></div>
+                        
+                        <!-- Step 1 -->
+                        <div class="relative mb-16 pl-20 animate-on-scroll">
+                            <div class="absolute left-10 top-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
+                            <h3 class="text-xl font-bold mb-2">Planning & Setup (0-2 hours)</h3>
+                            <p class="text-gray-600">We start with a quick consultation to understand your requirements and set up the project repository.</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="relative mb-16 pl-20 animate-on-scroll">
+                            <div class="absolute left-10 top-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</div>
+                            <h3 class="text-xl font-bold mb-2">Design & Development (2-12 hours)</h3>
+                            <p class="text-gray-600">Our team creates the design and implements it using Next.js and Tailwind CSS with SEO best practices.</p>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="relative mb-16 pl-20 animate-on-scroll">
+                            <div class="absolute left-10 top-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">3</div>
+                            <h3 class="text-xl font-bold mb-2">Review & Refinement (12-18 hours)</h3>
+                            <p class="text-gray-600">We share a preview for your feedback and make necessary adjustments.</p>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="relative pl-20 animate-on-scroll">
+                            <div class="absolute left-10 top-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">4</div>
+                            <h3 class="text-xl font-bold mb-2">Deployment & Handover (18-24 hours)</h3>
+                            <p class="text-gray-600">We deploy to your preferred platform and transfer all assets and documentation.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-2/5">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 animate-on-scroll">
+                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 mb-6"></div>
+                        <h3 class="text-xl font-bold mb-2">Real-time Collaboration</h3>
+                        <p class="text-gray-600 mb-4">Throughout the process, we maintain constant communication via your preferred channels.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-comments text-primary mr-3"></i>
+                                <span>Slack/WhatsApp updates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-video text-primary mr-3"></i>
+                                <span>Video call check-ins</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sync-alt text-primary mr-3"></i>
+                                <span>Live preview sharing</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Technology Stack</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We use modern, battle-tested technologies to deliver exceptional results</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 text-center">
+                <div class="tech-icon p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <i class="fab fa-react text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="font-bold">React 18</h3>
+                </div>
+                <div class="tech-icon p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <i class="fab fa-react text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="font-bold">React 17</h3>
+                </div>
+                <div class="tech-icon p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <i class="fab fa-js text-5xl text-yellow-500 mb-4"></i>
+                    <h3 class="font-bold">JavaScript ES6+</h3>
+                </div>
+                <div class="tech-icon p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <i class="fab fa-css3-alt text-5xl text-blue-600 mb-4"></i>
+                    <h3 class="font-bold">Tailwind CSS</h3>
+                </div>
+                <div class="tech-icon p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <i class="fas fa-search text-5xl text-green-500 mb-4"></i>
+                    <h3 class="font-bold">SEO Tools</h3>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gray-50 rounded-2xl p-8 animate-on-scroll">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-bold mb-4">Why This Stack?</h3>
+                        <p class="text-gray-600 mb-4">Our carefully selected technology combination ensures your website is:</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Extremely fast with Next.js optimizations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>SEO-friendly with server-side rendering</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Easily maintainable with component architecture</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Scalable for future growth</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <div class="flex items-center mb-4">
+                                <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                            </div>
+                            <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto">
+<span class="text-yellow-300">import</span> Head <span class="text-yellow-300">from</span> <span class="text-green-400">'next/head'</span>;
+<span class="text-yellow-300">import</span> Image <span class="text-yellow-300">from</span> <span class="text-green-400">'next/image'</span>;
+
+<span class="text-yellow-300">export default function</span> <span class="text-blue-400">HomePage</span>() {
+  <span class="text-yellow-300">return</span> (
+    &lt;&gt;
+      <span class="text-gray-500">&lt;!-- SEO Optimized Head --&gt;</span>
+      &lt;Head&gt;
+        &lt;title&gt;Your Business | Solution Description&lt;/title&gt;
+        &lt;meta name="description" content="..." /&gt;
+      &lt;/Head&gt;
+      
+      <span class="text-gray-500">&lt;!-- Hero Section --&gt;</span>
+      &lt;div className="container mx-auto"&gt;
+        &lt;div className="flex flex-col md:flex-row"&gt;
+          &lt;div className="md:w-1/2"&gt;
+            &lt;h1 className="text-4xl font-bold"&gt;Your Headline&lt;/h1&gt;
+            &lt;p&gt;Compelling description...&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div className="md:w-1/2"&gt;
+            &lt;Image src="/hero.jpg" alt="Hero" layout="responsive" /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">One flat rate for your complete website delivered in 24 hours</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden pricing-card">
+                    <div class="bg-gray-100 py-6 px-8">
+                        <h3 class="text-xl font-bold text-center">Landing Page</h3>
+                        <div class="text-center mt-4">
+                            <span class="text-4xl font-bold">$799</span>
+                            <span class="text-gray-600">/ one-time</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>1 Custom Landing Page</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Next.js + Tailwind CSS</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Basic SEO Setup</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Responsive Design</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Contact Form</span>
+                            </li>
+                            <li class="flex items-center text-gray-400">
+                                <i class="fas fa-times-circle mr-3"></i>
+                                <span>No CMS Integration</span>
+                            </li>
+                            <li class="flex items-center text-gray-400">
+                                <i class="fas fa-times-circle mr-3"></i>
+                                <span>No E-commerce</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center bg-gray-200 text-gray-800 font-medium py-3 rounded-lg hover:bg-gray-300 transition duration-300">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Popular Plan -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden pricing-card relative glow">
+                    <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold py-1 px-3 rounded-full">MOST POPULAR</div>
+                    <div class="bg-primary text-white py-6 px-8">
+                        <h3 class="text-xl font-bold text-center">Business Website</h3>
+                        <div class="text-center mt-4">
+                            <span class="text-4xl font-bold">$1,499</span>
+                            <span class="text-white text-opacity-80">/ one-time</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Up to 5 Pages</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Next.js + Tailwind CSS</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Advanced SEO Setup</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Blog Setup</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Contact Form + CRM Integration</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Basic CMS Integration</span>
+                            </li>
+                            <li class="flex items-center text-gray-400">
+                                <i class="fas fa-times-circle mr-3"></i>
+                                <span>No E-commerce</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center bg-primary text-white font-medium py-3 rounded-lg hover:bg-secondary transition duration-300">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden pricing-card">
+                    <div class="bg-dark text-white py-6 px-8">
+                        <h3 class="text-xl font-bold text-center">E-commerce</h3>
+                        <div class="text-center mt-4">
+                            <span class="text-4xl font-bold">$2,999</span>
+                            <span class="text-white text-opacity-80">/ one-time</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Up to 15 Pages</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Next.js + Tailwind CSS</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Complete SEO Setup</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>E-commerce Functionality</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Payment Gateway Integration</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Advanced CMS</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Product Management</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center bg-dark text-white font-medium py-3 rounded-lg hover:bg-gray-800 transition duration-300">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="text-gray-600 mb-4">Need something custom? We offer tailored solutions too.</p>
+                <a href="#contact" class="inline-block border-2 border-primary text-primary font-medium py-3 px-8 rounded-lg hover:bg-primary hover:text-white transition duration-300">Request Custom Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Don't just take our word for it - hear from businesses we've helped launch in 24 hours</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gray-300 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-gray-600">CEO, TechStart Inc.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"I needed a landing page for our new product launch and had a tight deadline. 24HourWeb delivered beyond my expectations - a beautiful, fast, and SEO-optimized site in just one day!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gray-300 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold">Michael Rodriguez</h4>
+                            <p class="text-gray-600">Marketing Director, GrowthCo</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"The speed and quality of work were impressive. Our new Next.js site not only looks amazing but already ranks higher on Google than our old site. The 24-hour turnaround was a game-changer for us."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gray-300 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold">Emily Chen</h4>
+                            <p class="text-gray-600">Founder, DesignBoutique</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"As a designer, I'm picky about aesthetics. The team understood my vision perfectly and implemented it with Tailwind CSS beautifully. The site is responsive, fast, and exactly what I wanted."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gray-300 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold">David Thompson</h4>
+                            <p class="text-gray-600">E-commerce Manager, ShopFast</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"We needed to quickly revamp our online store for a holiday sale. The e-commerce package delivered a modern, fast storefront that increased our conversion rate by 35%. Amazing work in just 24 hours!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-center mt-12">
+                <div class="flex space-x-2">
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-800"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-dark text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Launch Your Website in 24 Hours?</h2>
+            <p class="text-xl mb-10 max-w-3xl mx-auto">Stop waiting weeks for a website. Get a modern, high-performance site that converts visitors into customers - delivered in just one day.</p>
+            <a href="#contact" class="inline-block bg-accent text-dark font-bold px-10 py-4 rounded-lg text-lg hover:bg-opacity-90 transition duration-300 pulse">Get Started Now</a>
+            
+            <div class="mt-12 flex flex-wrap justify-center gap-6">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>No upfront payment</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>100% satisfaction guarantee</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>24-hour support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Start Your 24-Hour Project</h2>
+                    <p class="text-xl text-gray-600">Fill out the form below and we'll contact you within 1 hour to start your project</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <form id="contact-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Full Name *</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="phone" class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="website" class="block text-gray-700 mb-2">Current Website (if any)</label>
+                                <input type="url" id="website" name="website" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="service" class="block text-gray-700 mb-2">Service Interested In *</label>
+                            <select id="service" name="service" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                <option value="">Select a service</option>
+                                <option value="landing">Landing Page ($799)</option>
+                                <option value="business">Business Website ($1,499)</option>
+                                <option value="ecommerce">E-commerce ($2,999)</option>
+                                <option value="custom">Custom Project</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 mb-2">Project Details *</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Tell us about your project, goals, and any specific requirements..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="terms" name="terms" class="rounded text-primary focus:ring-primary" required>
+                                <span class="ml-2 text-gray-700">I agree to the <a href="#" class="text-primary hover:underline">terms and conditions</a></span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn" class="w-full bg-primary text-white font-bold py-4 rounded-lg hover:bg-secondary transition duration-300 flex items-center justify-center">
+                            <span id="submit-text">Start My 24-Hour Project</span>
+                            <div id="submit-loader" class="loader hidden ml-2"></div>
+                        </button>
+                    </form>
+                    
+                    <div id="form-message" class="mt-6 text-center hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Everything you need to know about our 24-hour website service</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            How can you deliver a website in just 24 hours?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            Our process is optimized for speed without sacrificing quality. We use pre-built components, established workflows, and a team of specialists working in parallel. After hundreds of projects, we've perfected the art of rapid, high-quality development.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            Will my website be SEO-friendly?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            Absolutely! SEO is built into our process from the ground up. We use Next.js for server-side rendering (great for SEO), semantic HTML structure, optimized metadata, proper heading hierarchy, and fast loading times - all critical SEO factors.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            Can I request revisions after delivery?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            Yes, we offer 7 days of complimentary support for minor revisions. For significant changes, we provide affordable hourly rates. We aim for perfection on the first delivery, but we're committed to making sure you're completely satisfied.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            What if I don't like the design?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            We minimize this risk by starting with a detailed consultation and sharing design concepts early in the process. If you're not satisfied with the initial design direction, we'll make revisions during the development phase at no extra cost.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            What happens after 24 hours?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            We deliver a complete, production-ready website. We'll help you deploy it to your hosting, transfer all files and documentation, and provide a brief orientation. You'll also receive 7 days of complimentary support for any minor issues.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 6 -->
+                    <div class="border-b border-gray-200">
+                        <button class="faq-question w-full text-left px-8 py-6 flex justify-between items-center font-bold text-lg">
+                            Can you work with my existing design or branding?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer px-8 py-4 text-gray-600 hidden">
+                            Absolutely! If you have existing brand guidelines, logos, or design assets, we'll incorporate them into your new site. Just share your materials during our initial consultation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-20 pb-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="bg-primary w-10 h-10 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">24</span>
+                        </div>
+                        <span class="ml-3 text-xl font-bold">Zeyda Web</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Professional websites delivered in 24 hours using Next.js, Tailwind CSS, and SEO best practices.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Landing Pages</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Business Websites</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">E-commerce Stores</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">SEO Optimization</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Website Redesign</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Case Studies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Web Development Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">SEO Tips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Support Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Contact Us</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 Web Street, San Francisco, CA 94107</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>hello@24hourweb.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 24HourWeb. All rights reserved.</p>
+                <div class="flex space-x-8">
+                    <a href="#" class="text-gray-500 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Toggle answer
+                answer.classList.toggle('hidden');
+                
+                // Toggle icon
+                if (icon.classList.contains('fa-chevron-down')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Testimonial Slider
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const dots = document.querySelectorAll('.testimonial-dot');
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('bg-gray-800'));
+            
+            testimonials[index].classList.add('active');
+            dots[index].classList.add('bg-gray-800');
+            currentTestimonial = index;
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showTestimonial(index));
+        });
+        
+        // Initialize first testimonial as active
+        if (testimonials.length > 0) {
+            showTestimonial(0);
+        }
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+            let nextIndex = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(nextIndex);
+        }, 2000);
+        
+        // Animation on scroll
+        function checkScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.0;
+                
+                if (elementPosition < screenPosition) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Initial check
+        checkScroll();
+        
+        // Listen for scroll
+        window.addEventListener('scroll', checkScroll);
+        
+        // Typewriter effect
+        const phrases = [
+            "Willcom",
+            "Design Zeyda Tamer"
+        ];
+        
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let typingElement = document.querySelector('.typing-demo');
+        
+        function typeWriter() {
+            if (currentChar < phrases[currentPhrase].length) {
+                typingElement.textContent = phrases[currentPhrase].substring(0, currentChar + 1);
+                currentChar++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(eraseText, 2000);
+            }
+        }
+        
+        function eraseText() {
+            if (currentChar > 0) {
+                typingElement.textContent = phrases[currentPhrase].substring(0, currentChar - 1);
+                currentChar--;
+                setTimeout(eraseText, 50);
+            } else {
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+                setTimeout(typeWriter, 500);
+            }
+        }
+        
+        // Start the typewriter effect
+        setTimeout(typeWriter, 1000);
+        
+        // Form submission to Google Sheets
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+        const submitBtn = document.getElementById('submit-btn');
+        const submitText = document.getElementById('submit-text');
+        const submitLoader = document.getElementById('submit-loader');
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notification-message');
+        
+        // Google Sheets endpoint (replace with your own endpoint)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx9S6-2SQSsFGN4j3F4WKpzcPG8bSM1ViNoGG72mARwgl9PhDVOo_vwhCQWqZ5EoxKg/exec';
+        
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitText.textContent = "Processing...";
+            submitLoader.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            try {
+                // Create form data
+                const formData = new FormData(contactForm);
+                
+                // Send data to Google Sheets
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    // Show success notification
+                    showNotification("Thank you! We'll contact you within the next hour.", "success");
+                    
+                    // Reset form
+                    contactForm.reset();
+                } else {
+                    throw new Error('Failed to submit form');
+                }
+            } catch (error) {
+                console.error('Error!', error);
+                showNotification("There was an error. Please try again later.", "error");
+            } finally {
+                // Reset button state
+                submitText.textContent = "Start My 24-Hour Project";
+                submitLoader.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Show notification function
+        function showNotification(message, type) {
+            notificationMessage.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Initialize notification system
+        notification.classList.remove('hidden');
+    </script>
+</body>
+</html>
